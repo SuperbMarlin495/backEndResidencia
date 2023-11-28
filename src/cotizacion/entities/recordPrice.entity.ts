@@ -14,7 +14,7 @@ export class record_price{
     general_description: string;
 
     @Column({nullable: true})
-    link: LinkStyle;
+    link: string;
 
     //Relacion de registro de cotizacion hacia la tabla customer
     @Column()
@@ -22,8 +22,7 @@ export class record_price{
     @ManyToOne(() => customer, customer => customer.id_customer) //Relacion muchos a uno(Muchos registros pueden pertenecer a un usuario)
     customerCreate: customer //Saber cual usuario fue el responsable de crear la cotizacion
 
-
     //Relacion con la tabla breakdown_price (Un registro le pertenece a muchos registros(degloses) )
-    @OneToMany(() => breakdown_price, breakdown_price => breakdown_price.id_customer)
+    @OneToMany(() => breakdown_price, breakdown_price => breakdown_price.id_breakdown, {cascade: true})
     breakdown_price: breakdown_price[];
 }

@@ -6,7 +6,7 @@ import { product } from 'src/materials/entities/material.entity';
 @Entity()
 export class breakdown_price {
     @PrimaryGeneratedColumn()
-    id_customer: number;
+    id_breakdown: number;
 
     @Column()
     qty_product: number;
@@ -22,5 +22,5 @@ export class breakdown_price {
     @Column()
     @OneToOne(() => product)
     @JoinColumn()
-    fk_product: product;
+    fk_product: number;
 }

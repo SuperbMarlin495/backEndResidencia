@@ -5,6 +5,7 @@ import { CotizacionModule } from './cotizacion/cotizacion.module';
 import { MaterialsModule } from './materials/materials.module';
 import { LoginModule } from './login/login.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { PdfCreateModule } from './pdf-create/pdf-create.module';
 
 @Module({
   imports: [
@@ -18,7 +19,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
-     MaterialsModule, CotizacionModule, LoginModule],
+     MaterialsModule, CotizacionModule, LoginModule, PdfCreateModule],
   controllers: [AppController],
   providers: [AppService],
 })

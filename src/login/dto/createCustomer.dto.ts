@@ -20,7 +20,7 @@ export class createUserDto{
     emails_address: string;
     @IsNumber()
     @IsNotEmpty()
-    cell_number: number;
+    cell_number: string;
     @IsNumber()
     fk_rolUser: number;
 }

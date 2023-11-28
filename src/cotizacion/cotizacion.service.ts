@@ -1,24 +1,26 @@
 import { Injectable } from '@nestjs/common';
-import { CreateCotizacionDto } from './dto/create-cotizacion.dto';
 import { UpdateCotizacionDto } from './dto/update-cotizacion.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Repository } from 'typeorm';
-import { breakdown_price } from './entities/cotizacion.entity';
+import { record_priceDto } from './dto/record-price.dto';
+import { record_price } from './entities/recordPrice.entity';
 
 @Injectable()
 export class CotizacionService {
 
-constructor(@InjectRepository(breakdown_price) private breakdown_price: Repository<breakdown_price>
+constructor(@InjectRepository(record_price) private recordPrice: Repository<record_price>
 ){}
 
-  create(createCotizacionDto: CreateCotizacionDto) {
-    return 'This action adds a new cotizacion';
+  createBreakDown(record_priceData: record_priceDto) {
+    var responseRecord = this.recordPrice.create(record_priceData);
+    return this.recordPrice.save(responseRecord);
   }
 
-  findAll() {
-    return `This action returns all cotizacion`;
-  }
+  // obtainBreakdown() {
+  //   var breakdown_price = this.breakdown_priceRepository.find();
+  //  return breakdown_price;
+  // }
 
   findOne(id: number) {
     return `This action returns a #${id} cotizacion`;

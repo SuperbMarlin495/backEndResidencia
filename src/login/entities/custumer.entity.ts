@@ -16,14 +16,12 @@ export class customer {
     firstName: string;
     @Column( )
     lastName: string;
-    @Column({nullable: true})
-    alias: string;
     @Column()
     company: string;
     @Column()
     emails_address: string;
     @Column()
-    cell_number: number;
+    cell_number: string;
     @Column()
     fk_rolUser: number;
     @Column({type: 'datetime', default: () => 'CURRENT_TIMESTAMP'})//Este data es para que tome el tiempo actual

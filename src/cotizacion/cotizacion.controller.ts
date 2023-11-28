@@ -3,18 +3,20 @@ import { CotizacionService } from './cotizacion.service';
 import { CreateCotizacionDto } from './dto/create-cotizacion.dto';
 import { UpdateCotizacionDto } from './dto/update-cotizacion.dto';
 
+import { record_priceDto } from './dto/record-price.dto';
+
 @Controller('cotizacion')
 export class CotizacionController {
   constructor(private readonly cotizacionService: CotizacionService) {}
 
   @Post()
-  create(@Body() createCotizacionDto: CreateCotizacionDto) {
-    return this.cotizacionService.create(createCotizacionDto);
+  createCotizacion(@Body() createRecordPricedto: record_priceDto) {
+    return this.cotizacionService.createBreakDown(createRecordPricedto);
   }
 
   @Get()
-  findAll() {
-    return this.cotizacionService.findAll();
+  obtainBreakdown() {
+    // return this.cotizacionService.obtainBreakdown();
   }
 
   @Get(':id')
