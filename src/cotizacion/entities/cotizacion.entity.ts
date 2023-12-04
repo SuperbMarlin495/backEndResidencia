@@ -23,23 +23,12 @@ export class breakdown_price {
   // @ManyToOne(() => record_price, recordPrice => recordPrice.id_record_price)
   // recordPrice: record_price;r
 
-  // Relación ManyToOne con record_price
+  // Relación ManyToOne con record_price 
   @ManyToOne(() => record_price, (recordPrice) => recordPrice.id_record_price)
   @JoinColumn({ name: 'fk_record_price' }) // Especifica el nombre de la columna en la tabla breakdown_price
   recordPrice: number;
 
-  //Relacion con la tabla de producto uno a uno (un registro del desglose le pertenece a un producto )
-  //Como es de uno a uno la relacion se hace con la columan de fk
-  @Column()
-  @ManyToMany(() => product, (product) => product.id_product)
-  @JoinTable({ 
-    name: 'product_breakdown',
-    joinColumn: {
-      name: 'breakdown_id'
-    },
-    inverseJoinColumn: {
-      name: 'product_id'
-    }
-})
-  fk_product: number;
+@ManyToMany(type => product, Product => Product.id_product)
+@JoinTable()
+product: product[]
 }

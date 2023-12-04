@@ -15,6 +15,6 @@ export class product {
     @Column()
     packing: boolean;
 
-    @ManyToMany(() => breakdown_price, (breakdownPrice) => breakdownPrice.id_breakdown)
-    breakdown_price: breakdown_price[];
+    @ManyToMany(type => breakdown_price, breakdownPrice => breakdownPrice.id_breakdown)
+    breakdonPrice: breakdown_price[]
 }
