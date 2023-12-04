@@ -21,7 +21,7 @@ export class CotizacionController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.cotizacionService.findOne(+id);
+    return this.cotizacionService.findOneBreakdown(+id);
   }
 
   @Patch(':id')

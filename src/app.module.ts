@@ -6,20 +6,27 @@ import { MaterialsModule } from './materials/materials.module';
 import { LoginModule } from './login/login.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PdfCreateModule } from './pdf-create/pdf-create.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import envsConfig from './config/envs.config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'db-empaques-test-1.cyrtfkz5fae1.us-east-2.rds.amazonaws.com',
-      port: 3306,
-      username: 'admin',
-      password: 'LI$#2023JI',
-      database: 'cotizacion_BD',
-      entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      host: envsConfig().DATABASE.DB_HOST,
+      port: +envsConfig().DATABASE.DB_PORT,
+      username: envsConfig().DATABASE.DB_USER,
+      password: envsConfig().DATABASE.DB_PASSWORD,
+      database: envsConfig().DATABASE.DB_NAME,
+      autoLoadEntities: true,
       synchronize: true,
     }),
-     MaterialsModule, CotizacionModule, LoginModule, PdfCreateModule],
+    MaterialsModule,
+    CotizacionModule,
+    LoginModule,
+    PdfCreateModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

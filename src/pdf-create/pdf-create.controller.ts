@@ -1,14 +1,18 @@
-import { Controller, Get, Res } from '@nestjs/common';
+import { Controller, Get, Param, Res } from '@nestjs/common';
 import { PdfCreateService } from './pdf-create.service';
+import { CotizacionService } from 'src/cotizacion/cotizacion.service'; 
 
 @Controller('pdf-create')
 export class PdfCreateController {
 
-    constructor(private readonly createPDF: PdfCreateService){}
+    constructor(private readonly createPDF: PdfCreateService,
+        private readonly cotizacionData: CotizacionService
+        ){}
 
-    @Get("pdf")
-    async downloadPDF(@Res() res): Promise<void>{
-        const buffer = await this.createPDF.generatePDF();
+    @Get(":id")
+    async downloadPDF(@Res() res, @Param('id') id: number): Promise<void>{
+        var dataCotizacion = await this.cotizacionData.findOneBreakdown(id);
+        const buffer = await this.createPDF.generatePDF(dataCotizacion);
 
         const fileName = 'Factura' + Date.now()+'.pdf';
         res.set({

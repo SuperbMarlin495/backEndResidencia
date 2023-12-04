@@ -5,8 +5,8 @@ const pdfDocument = require('pdfkit-table'); //Con esto estamos importando pdfki
 @Injectable()
 export class PdfCreateService {
 
-    async generatePDF(): Promise<Buffer> {
-
+    async generatePDF(dataCotizacion): Promise<Buffer> {
+        console.log(dataCotizacion);
         const pdfBuffer: Buffer = await new Promise(resolve => {
             const doc = new pdfDocument({
                 size: "LETTER",
@@ -16,35 +16,35 @@ export class PdfCreateService {
 
             let pageNumber = 0;
 
-            doc.on('pageAdded', () => {    //Metodo que se llama cada vez que se crea una pagina
-                pageNumber++;
-                if (pageNumber > 1) {
-                    doc.rect(0, -690, doc.page.width, doc.page.height).fill('black');//Cuadro negro de arriba
-                    doc.rect(0, 700, doc.page.width, doc.page.height).fill('black');//Cuadro negrio de abajo
-                    doc.image(join(process.cwd(), "images/LogoPNG.png"), doc.page.width - 550, 25, { width: 150 });
+            // doc.on('pageAdded', () => {    //Metodo que se llama cada vez que se crea una pagina
+            //     pageNumber++;
+            //     if (pageNumber > 1) {
+            //         doc.rect(0, -690, doc.page.width, doc.page.height).fill('black');//Cuadro negro de arriba
+            //         doc.rect(0, 700, doc.page.width, doc.page.height).fill('black');//Cuadro negrio de abajo
+            //         doc.image(join(process.cwd(), "images/LogoPNG.png"), doc.page.width - 550, 25, { width: 150 });
                     
-                }
+            //     }
 
-                let bottom = doc.page.margins.bottom;
+            //     let bottom = doc.page.margins.bottom;
 
-                doc.page.margins.bottom = 0;
+            //     doc.page.margins.bottom = 0;
                
-                doc.font("Helvetica");
-                doc.fontSize(14);
-                doc.fillColor('white')
-                doc.text(
-                    'Pag ' + pageNumber,
-                    (doc.page.width - 100) * 0.5,
-                    doc.page.height - 50,
-                    {
-                        width: 100,
-                        aling: 'center',
-                        lineBreak: false,
-                    },
-                )
+            //     doc.font("Helvetica");
+            //     doc.fontSize(14);
+            //     doc.fillColor('white')
+            //     doc.text(
+            //         'Pag ' + pageNumber,
+            //         (doc.page.width - 100) * 0.5,
+            //         doc.page.height - 50,
+            //         {
+            //             width: 100,
+            //             aling: 'center',
+            //             lineBreak: false,
+            //         },
+            //     )
 
-                doc.page.margins.bottom = bottom;
-            })//Creacion de header y del footer
+            //     doc.page.margins.bottom = bottom;
+            // })//Creacion de header y del footer
 
             //======================Primera pagina======================================
             doc.addPage();
@@ -62,19 +62,43 @@ export class PdfCreateService {
 
             //=============================================================
             doc.addPage(); //Esto es para agregar una pagina
+            doc.rect(0, -690, doc.page.width, doc.page.height).fill('black');//Cuadro negro de arriba
+            doc.image(join(process.cwd(), "images/LogoPNG.png"), doc.page.width - 550, 25, { width: 150 });
             doc.fillColor('white')
             doc.fontSize(30);
             doc.text("Cotización", 350, 50);
 
+            doc.fillColor('black')
+            doc.fontSize(20);
+            doc.text("Nombre:", 100, 150);
+            doc.text("Fecha:", 400, 150);
+
+            doc.text("", 40, 200);
             const table = {
-                title: "Tabla de ejemplo",
-                subtitle: "Esta es una tabla de ejemplo",
-                headers: ["Id", "Nombre"],
-                rows: [["1", 'Dev Litos'], ["2", "Programadores de Jabil"]]
-            }
-            doc.table(table, { columnSize: [300, 20] })
+                title: "",
+                subtitle: "",
+                headers: [ "Producto", "Descripción", "Precio" ],
+                rows: [
+                  [ "Switzerland", "12%", "+1.12%" ],
+                  [ "France", "67%", "-0.98%" ],
+                  [ "England", "33%", "+4.44%" ],
+                ],
+              };
+
+              doc.table(table, {
+                width: 550,
+                padding: 5,
+                columnSpacing: 5,
+                prepareHeader: () => doc.font("Helvetica-Bold").fontSize(28),
+                prepareRow: (row, indexColumn, indexRow, rectRow, rectCell) => {
+                  doc.font("Helvetica").fontSize(18);
+                //   indexColumn === 0 && doc.addBackground(rectRow, 'blue', 0.15);
+                },
+              });;
 
             
+              doc.rect(0, 700, doc.page.width, doc.page.height).fill('black');//Cuadro negrio de abajo
+
             //=============================================================
             doc.addPage();
             doc.fillColor('black')

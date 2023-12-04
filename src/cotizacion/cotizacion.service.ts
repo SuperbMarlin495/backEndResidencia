@@ -5,11 +5,13 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { record_priceDto } from './dto/record-price.dto';
 import { record_price } from './entities/recordPrice.entity';
+import { breakdown_price } from './entities/cotizacion.entity'
 
 @Injectable()
 export class CotizacionService {
 
-constructor(@InjectRepository(record_price) private recordPrice: Repository<record_price>
+constructor(@InjectRepository(record_price) private recordPrice: Repository<record_price>,
+@InjectRepository(breakdown_price) private breakdownPrice: Repository<breakdown_price>
 ){}
 
   createBreakDown(record_priceData: record_priceDto) {
@@ -17,14 +19,16 @@ constructor(@InjectRepository(record_price) private recordPrice: Repository<reco
     return this.recordPrice.save(responseRecord);
   }
 
-  // obtainBreakdown() {
-  //   var breakdown_price = this.breakdown_priceRepository.find();
-  //  return breakdown_price;
+  // async findOneBreakdown(id: number) {
+  //   return await this.breakdownPrice.findOne({
+  //     where:{
+  //      id_breakdown: id
+  //     },
+  //     relations: {
+  //       fk_product: true,
+  //     }
+  //   });
   // }
-
-  findOne(id: number) {
-    return `This action returns a #${id} cotizacion`;
-  }
 
   update(id: number, updateCotizacionDto: UpdateCotizacionDto) {
     return `This action updates a #${id} cotizacion`;

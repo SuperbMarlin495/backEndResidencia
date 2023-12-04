@@ -9,5 +9,6 @@ import { record_price } from './entities/recordPrice.entity';
   imports: [TypeOrmModule.forFeature([breakdown_price, record_price])],
   controllers: [CotizacionController],
   providers: [CotizacionService],
+  exports: [CotizacionService],
 })
 export class CotizacionModule {}

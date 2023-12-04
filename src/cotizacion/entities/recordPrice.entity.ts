@@ -1,7 +1,8 @@
 
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
 import { customer } from 'src/login/entities/custumer.entity'
 import { breakdown_price } from './cotizacion.entity';
+import { join } from 'path';
 
 @Entity()
 export class record_price{
@@ -16,13 +17,13 @@ export class record_price{
     @Column({nullable: true})
     link: string;
 
-    //Relacion de registro de cotizacion hacia la tabla customer
-    @Column()
-    fk_info_customer: number;//Se guarda el puro id del usuario para hacer la realcion
-    @ManyToOne(() => customer, customer => customer.id_customer) //Relacion muchos a uno(Muchos registros pueden pertenecer a un usuario)
-    customerCreate: customer //Saber cual usuario fue el responsable de crear la cotizacion
+     //Relacion de registro de cotizacion hacia la tabla customer
+     @Column()
+     @ManyToOne(() => customer, customer => customer.id_customer) //Relacion muchos a uno(Muchos registros pueden pertenecer a un usuario)
+     fk_info_customer: number;//Se guarda el puro id del usuario para hacer la realcion
 
     //Relacion con la tabla breakdown_price (Un registro le pertenece a muchos registros(degloses) )
-    @OneToMany(() => breakdown_price, breakdown_price => breakdown_price.id_breakdown, {cascade: true})
+    @OneToMany(() => breakdown_price, breakdown_price => (breakdown_price.id_breakdown, breakdown_price.recordPrice), {cascade: true})
     breakdown_price: breakdown_price[];
+    // breakdown_price: number;
 }
