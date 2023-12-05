@@ -11,7 +11,7 @@ export class PdfCreateController {
 
     @Get(":id")
     async downloadPDF(@Res() res, @Param('id') id: number): Promise<void>{
-        var dataCotizacion = await this.cotizacionData.findOneBreakdown(id);
+        var dataCotizacion = await this.cotizacionData.findRecordPrice(id);
         const buffer = await this.createPDF.generatePDF(dataCotizacion);
 
         const fileName = 'Factura' + Date.now()+'.pdf';

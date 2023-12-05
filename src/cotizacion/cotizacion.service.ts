@@ -19,17 +19,22 @@ constructor(@InjectRepository(record_price) private recordPrice: Repository<reco
     return this.recordPrice.save(responseRecord);
   }
 
-  // async findOneBreakdown(id: number) {
-  //   return await this.breakdownPrice.findOne({
-  //     where:{
-  //      id_breakdown: id
-  //     },
-  //     relations: {
-  //       fk_product: true,
-  //     }
-  //   });
-  // }
-
+  async findOneBreakdown(id: number) {
+    return await this.breakdownPrice.findOne({
+      where:{
+       id_breakdown: id
+      }
+    });
+  }
+  
+  async findRecordPrice(id: number){
+    return await this.recordPrice.findOne({
+      where:{
+        id_record_price: id
+      },
+      relations: ['breakdown_price', 'breakdown_price.product']
+    });
+  }
   update(id: number, updateCotizacionDto: UpdateCotizacionDto) {
     return `This action updates a #${id} cotizacion`;
   }
