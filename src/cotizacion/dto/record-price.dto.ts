@@ -1,5 +1,6 @@
 import { IsNotEmpty, IsNumber, IsString } from "class-validator";
 import { breakdown_price } from "../entities/cotizacion.entity";
+import { customer } from '../../login/entities/custumer.entity'
 
 export class record_priceDto{
     @IsString()
@@ -11,7 +12,8 @@ export class record_priceDto{
 
     @IsNumber()
     @IsNotEmpty()
-    fk_info_customer: number
+    fk_info_customer: number;
 
+    customer: customer
     breakdown_price: breakdown_price[];//Se hace la relacion para los datos de la entity
 }

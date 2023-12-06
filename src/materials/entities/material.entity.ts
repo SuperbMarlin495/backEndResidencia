@@ -1,5 +1,5 @@
 import { type } from 'os';
-import {Entity, Column, PrimaryGeneratedColumn, ManyToMany} from 'typeorm';
+import {Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable, OneToMany, ManyToOne, JoinColumn} from 'typeorm';
 import { breakdown_price } from 'src/cotizacion/entities/cotizacion.entity';
 
 @Entity()//Este decorador indica que es para que pueda convertir typeorm a una tabla
@@ -15,6 +15,9 @@ export class product {
     @Column()
     packing: boolean;
 
-    @ManyToMany(type => breakdown_price, breakdownPrice => breakdownPrice.id_breakdown)
-    breakdonPrice: breakdown_price[]
-}
+    @Column()
+    precioPza: number;
+
+    @OneToMany(() => breakdown_price, breakdown_price => (breakdown_price.id_breakdown, breakdown_price.product))
+    breakdown_price: breakdown_price[]
+}   

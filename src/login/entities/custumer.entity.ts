@@ -26,7 +26,7 @@ export class customer {
     fk_rolUser: number;
     @Column({type: 'datetime', default: () => 'CURRENT_TIMESTAMP'})//Este data es para que tome el tiempo actual
     dateTime_register: Date;
-
+ 
     //Realacion uno a muchos(Un usuario puede tener muchos registros)
     @OneToMany(() => record_price, record_price => record_price.id_record_price )
     record_price: record_price[] //saber cuantas cotizaciones tiene el usuario

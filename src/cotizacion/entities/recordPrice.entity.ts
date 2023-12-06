@@ -18,12 +18,12 @@ export class record_price{
     link: string;
 
      //Relacion de registro de cotizacion hacia la tabla customer
-     @Column()
-     @ManyToOne(() => customer, customer => customer.id_customer) //Relacion muchos a uno(Muchos registros pueden pertenecer a un usuario)
-     fk_info_customer: number;//Se guarda el puro id del usuario para hacer la realcion
 
-    //Relacion con la tabla breakdown_price (Un registro le pertenece a muchos registros(degloses) )
+     @ManyToOne(() => customer, customer => customer.id_customer) //Relacion muchos a uno(Muchos registros pueden pertenecer a un usuario)
+     @JoinColumn({name: 'fk_info_customer'})
+     custumer: customer; //Se guarda el puro id del usuario para hacer la realcion
+    
+     //Relacion con la tabla breakdown_price (Un registro le pertenece a muchos registros(degloses) )
     @OneToMany(() => breakdown_price, breakdown_price => (breakdown_price.id_breakdown, breakdown_price.recordPrice), {cascade: true})
     breakdown_price: breakdown_price[];
-    // breakdown_price: number;
 }

@@ -20,19 +20,24 @@ constructor(@InjectRepository(record_price) private recordPrice: Repository<reco
   }
 
   async findOneBreakdown(id: number) {
-    return await this.breakdownPrice.findOne({
+    return await this.breakdownPrice.find({
       where:{
-       id_breakdown: id
+       recordPrice: id,
       }
     });
   }
   
   async findRecordPrice(id: number){
     return await this.recordPrice.findOne({
+      relations: {
+        breakdown_price: {
+          product: true,
+        },
+        custumer: true,
+      },
       where:{
         id_record_price: id
-      },
-      relations: ['breakdown_price', 'breakdown_price.product']
+      }
     });
   }
   update(id: number, updateCotizacionDto: UpdateCotizacionDto) {
