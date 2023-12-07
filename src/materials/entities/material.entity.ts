@@ -18,6 +18,9 @@ export class product {
     @Column()
     precioPza: number;
 
+    @Column()
+    imgProduct: string;
+
     @OneToMany(() => breakdown_price, breakdown_price => (breakdown_price.id_breakdown, breakdown_price.product))
     breakdown_price: breakdown_price[]
 }   
