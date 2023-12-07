@@ -22,6 +22,24 @@
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
+
+# Docker
+## Levantar contenedor en modo prod
+Para levantar el contenedor en modo desarrollo, debemos asegurarnos que nuestra variable de entorno `STAGE` sea igual a `prod` ejemplo `STAGE=prod`
+
+1-. Primero construimos la imagen el flag `-f` indica que utilizarmos el archivo de desarrollo
+```sh 
+docker compose -f .\docker-compose.dev.yml build
+```
+
+2-. Cuando la imagen termine de construirse, podemos levantar el contenedor con el siguiente comando
+
+*El flag `-d` indica que solo queremos que se levante el contenedor, no veremos los logs del contenedor*
+```sh
+docker compose -f .\docker-compose.dev.yml up -d 
+```
+
+
 ## Description
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
