@@ -27,6 +27,7 @@ EXPOSE 3200
 WORKDIR /app
 COPY --from=prod-deps /app/node_modules ./node_modules
 COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/images ./images
 CMD ["node", "dist/main"]
 
 
