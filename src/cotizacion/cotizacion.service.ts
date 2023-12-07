@@ -14,6 +14,17 @@ constructor(@InjectRepository(record_price) private recordPrice: Repository<reco
 @InjectRepository(breakdown_price) private breakdownPrice: Repository<breakdown_price>
 ){}
 
+async obtainRecordPrice(){
+  return await this.recordPrice.find({
+    relations: {
+      breakdown_price: {
+        product: true,
+      },
+      custumer: true,
+    }
+  })
+}
+
   createBreakDown(record_priceData: record_priceDto) {
     var responseRecord = this.recordPrice.create(record_priceData);
     return this.recordPrice.save(responseRecord);

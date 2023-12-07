@@ -7,7 +7,8 @@ import { record_priceDto } from './dto/record-price.dto';
 
 @Controller('cotizacion')
 export class CotizacionController {
-  constructor(private readonly cotizacionService: CotizacionService) {}
+  constructor(private readonly cotizacionService: CotizacionService
+    ) {}
 
   @Post()
   createCotizacion(@Body() createRecordPricedto: record_priceDto) {
@@ -15,8 +16,8 @@ export class CotizacionController {
   }
 
   @Get()
-  obtainBreakdown() {
-    // return this.cotizacionService.obtainBreakdown();
+  obtainrecordPrice() {
+    return this.cotizacionService.obtainRecordPrice();
   }
 
   @Get(':id')
