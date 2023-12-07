@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: .
+      target: ${STAGE}
+      dockerfile: Dockerfile
+
+    container_name: factu-coti-app
+    image: em-cotizaciones-api
+    ports:
+      - 3200:3200
+
+    env_file:
+      - ./.env
