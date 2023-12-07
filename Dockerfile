@@ -19,7 +19,7 @@ RUN npm run build
 FROM node:19-alpine3.15 as prod-deps
 WORKDIR /app
 COPY package.json ./
-COPY  images ./images
+COPY  images ./
 RUN npm install --omit=dev
 
 FROM node:19-alpine3.15 as prod
@@ -27,7 +27,7 @@ EXPOSE 3200
 WORKDIR /app
 COPY --from=prod-deps /app/node_modules ./node_modules
 COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/images ./images
+COPY --from=builder /app/images ./
 CMD ["node", "dist/main"]
 
 
